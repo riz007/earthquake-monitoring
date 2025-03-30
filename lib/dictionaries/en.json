@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "title": "Earthquake Monitor | Thailand & Global",
+    "description": "Real-time earthquake detection and monitoring for Thailand and worldwide"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "yes": "Yes",
+    "no": "No",
+    "backToDashboard": "Back to Dashboard"
+  },
+  "home": {
+    "title": "Earthquake Monitor",
+    "subtitle": "Real-time earthquake detection and monitoring"
+  },
+  "tabs": {
+    "map": "Map View",
+    "feed": "Recent Activity",
+    "risk": "Risk Assessment"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "about": "About",
+    "safety": "Safety Tips",
+    "history": "Historical Data"
+  },
+  "footer": {
+    "description": "Real-time earthquake detection and monitoring for Thailand and worldwide. Stay informed about seismic activity in your area.",
+    "resources": "Resources",
+    "legal": "Legal",
+    "connect": "Connect",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "apiDocs": "API Documentation",
+    "contact": "Contact Us",
+    "allRightsReserved": "All rights reserved.",
+    "dataSources": "Data sources"
+  },
+  "earthquake": {
+    "near": "Earthquake near",
+    "on": "on",
+    "detailsAbout": "Details about the",
+    "kmDepth": "km depth",
+    "alert": "Alert",
+    "technicalDetails": "Technical Details",
+    "magnitudeType": "Magnitude Type",
+    "coordinates": "Coordinates",
+    "tsunamiRisk": "Tsunami Risk",
+    "status": "Status",
+    "source": "Source",
+    "feltReports": "Felt Reports",
+    "reports": "reports",
+    "moreInfo": "More Info",
+    "eventPage": "Event Page",
+    "recentEarthquakes": "Recent Earthquakes",
+    "eventsInLast": "events in the last",
+    "days": "days",
+    "tsunamiAlert": "Tsunami Risk",
+    "depth": "Depth",
+    "filter": "Filter",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "apply": "Apply",
+    "reset": "Reset",
+    "minMagnitude": "Min Magnitude",
+    "maxResults": "Max Results",
+    "noData": "No recent earthquake data available",
+    "page": "Page",
+    "of": "of",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "location": {
+    "detectingLocation": "Detecting your location...",
+    "locationUnavailable": "Location unavailable",
+    "enableLocation": "We couldn't detect your location. Please enable location services in your browser.",
+    "significantEarthquakes": "significant earthquakes (M4.0+) detected near your location in the last 7 days.",
+    "minorEarthquakes": "minor earthquakes detected near your location in the last 7 days.",
+    "noActivity": "No significant seismic activity near your location in the last 7 days.",
+    "near": "near your location"
+  },
+  "notFound": {
+    "title": "Earthquake Not Found",
+    "message": "The earthquake you're looking for doesn't exist or has been removed from the database."
+  },
+  "error": {
+    "title": "Something went wrong",
+    "message": "We encountered an error while loading this page. Please try again later.",
+    "tryAgain": "Try again"
+  },
+  "risk": {
+    "title": "Seismic Risk Assessment",
+    "subtitle": "Based on your location and historical seismic data",
+    "overallRisk": "Overall Risk",
+    "factors": "Risk Factors",
+    "history": "Historical Data",
+    "recommendations": "Recommendations",
+    "lowRisk": "Low",
+    "moderateRisk": "Moderate",
+    "highRisk": "High",
+    "veryHighRisk": "Very High",
+    "faultLineProximity": "Proximity to Fault Lines",
+    "historicalActivity": "Historical Seismic Activity",
+    "buildingVulnerability": "Building Vulnerability",
+    "populationDensity": "Population Density",
+    "historicalSummary": "Historical Earthquakes in Your Region",
+    "significantEvents": "Significant Events",
+    "date": "Date",
+    "magnitude": "Magnitude",
+    "location": "Location",
+    "impact": "Impact",
+    "safetyRecommendations": "Safety Recommendations"
+  }
+}
+
