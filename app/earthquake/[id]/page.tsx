@@ -47,19 +47,15 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function EarthquakeDetailPage({
-  params: { id },
+  params,
 }: {
   params: { id: string };
 }) {
   try {
-    // Fetch earthquake data using the awaited `id`
-    const earthquake = await getEarthquakeById(id);
+    // We should always get an earthquake object now, even if it's synthetic
+    const earthquake = await getEarthquakeById(params.id);
 
-    if (!earthquake) {
-      return <div>Error: Earthquake not found</div>;
-    }
-
-    // Check if it's limited data
+    // Check if we're dealing with limited data
     const isLimitedData = earthquake?.place === "Location unavailable";
 
     if (isLimitedData) {
@@ -74,8 +70,8 @@ export default async function EarthquakeDetailPage({
           <Alert className="mb-6 bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-900">
             <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
             <AlertDescription className="text-amber-800 dark:text-amber-300">
-              Limited data available for earthquake ID: {id}. This earthquake
-              may be archived or removed from the USGS database.
+              Limited data available for earthquake ID: {params.id}. This
+              earthquake may be archived or removed from the USGS database.
             </AlertDescription>
           </Alert>
 
@@ -137,7 +133,6 @@ export default async function EarthquakeDetailPage({
       );
     }
 
-    // Helper functions
     const getMagnitudeColor = (magnitude: number) => {
       if (magnitude < 4.0) return "bg-green-500 text-white";
       if (magnitude < 5.0) return "bg-yellow-500 text-black";
@@ -214,11 +209,82 @@ export default async function EarthquakeDetailPage({
               </Suspense>
             </div>
           </div>
+
+          <div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Technical Details</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <dl className="space-y-4">
+                  <div>
+                    <dt className="text-sm font-medium text-muted-foreground">
+                      Magnitude Type
+                    </dt>
+                    <dd className="text-lg">{earthquake.magnitudeType}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-medium text-muted-foreground">
+                      Coordinates
+                    </dt>
+                    <dd className="text-lg">
+                      {earthquake.coordinates.join(", ")}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-medium text-muted-foreground">
+                      Tsunami Risk
+                    </dt>
+                    <dd className="text-lg">
+                      {earthquake.tsunami ? "Yes" : "No"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-medium text-muted-foreground">
+                      Status
+                    </dt>
+                    <dd className="text-lg capitalize">{earthquake.status}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-medium text-muted-foreground">
+                      Source
+                    </dt>
+                    <dd className="text-lg">{earthquake.source}</dd>
+                  </div>
+                  {earthquake.felt !== null && (
+                    <div>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        Felt Reports
+                      </dt>
+                      <dd className="text-lg">{earthquake.felt} reports</dd>
+                    </div>
+                  )}
+                  {earthquake.url && (
+                    <div>
+                      <dt className="text-sm font-medium text-muted-foreground">
+                        More Info
+                      </dt>
+                      <dd className="text-lg">
+                        <a
+                          href={earthquake.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 dark:text-blue-400 hover:underline">
+                          USGS Event Page
+                        </a>
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </main>
     );
   } catch (error) {
     console.error("Error rendering earthquake detail page:", error);
+    // Instead of using notFound(), return a friendly error page
     return (
       <main className="container mx-auto px-4 py-6">
         <Link href="/">
@@ -230,9 +296,43 @@ export default async function EarthquakeDetailPage({
         <Alert variant="destructive" className="mb-6">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            An error occurred while loading earthquake data for ID: {id}
+            An error occurred while loading earthquake data for ID: {params.id}
           </AlertDescription>
         </Alert>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Error Loading Earthquake Data</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4">
+              We encountered an error while trying to load the earthquake data.
+              This could be due to:
+            </p>
+
+            <ul className="list-disc pl-5 mb-6 space-y-1">
+              <li>The earthquake ID may be invalid</li>
+              <li>The USGS API may be temporarily unavailable</li>
+              <li>
+                The earthquake data may have been removed from the database
+              </li>
+            </ul>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/">
+                <Button>Return to Dashboard</Button>
+              </Link>
+              <a
+                href={`https://earthquake.usgs.gov/earthquakes/eventpage/${params.id}`}
+                target="_blank"
+                rel="noopener noreferrer">
+                <Button variant="outline">
+                  Try USGS Website <ExternalLink className="h-4 w-4 ml-2" />
+                </Button>
+              </a>
+            </div>
+          </CardContent>
+        </Card>
       </main>
     );
   }
