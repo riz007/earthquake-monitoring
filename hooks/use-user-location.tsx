@@ -1,67 +1,142 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { getUserLocation } from "@/lib/location-service";
-import type { UserLocation } from "@/types/location";
+import { useState, useEffect } from "react"
+import type { UserLocation } from "@/types/location"
 
 export function useUserLocation() {
-  const [location, setLocation] = useState<UserLocation | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [location, setLocation] = useState<UserLocation | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [permissionState, setPermissionState] = useState<PermissionState | null>(null)
+
+  const fetchBrowserLocation = async (): Promise<UserLocation> => {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error("Geolocation is not supported by your browser"))
+        return
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            // Get coordinates
+            const { latitude, longitude } = position.coords
+
+            // Try to get location details using reverse geocoding
+            try {
+              const response = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`,
+                { headers: { "User-Agent": "EarthquakeMonitor/1.0" } },
+              )
+
+              if (response.ok) {
+                const data = await response.json()
+                resolve({
+                  latitude,
+                  longitude,
+                  city: data.address?.city || data.address?.town || data.address?.village || "Unknown",
+                  region: data.address?.state || data.address?.county || "Unknown",
+                  country: data.address?.country || "Unknown",
+                  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                })
+              } else {
+                // If reverse geocoding fails, return coordinates only
+                resolve({
+                  latitude,
+                  longitude,
+                  city: "Unknown",
+                  region: "Unknown",
+                  country: "Unknown",
+                  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                })
+              }
+            } catch (geocodeError) {
+              console.error("Reverse geocoding failed:", geocodeError)
+              // If reverse geocoding fails, return coordinates only
+              resolve({
+                latitude,
+                longitude,
+                city: "Unknown",
+                region: "Unknown",
+                country: "Unknown",
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+              })
+            }
+          } catch (err) {
+            reject(err)
+          }
+        },
+        (err) => {
+          reject(err)
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 60000,
+        },
+      )
+    })
+  }
+
+  const checkPermission = async () => {
+    if (!navigator.permissions || !navigator.permissions.query) {
+      // Browser doesn't support permissions API
+      return null
+    }
+
+    try {
+      const result = await navigator.permissions.query({ name: "geolocation" as PermissionName })
+      return result.state
+    } catch (err) {
+      console.error("Error checking geolocation permission:", err)
+      return null
+    }
+  }
 
   const fetchLocation = async () => {
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
+
     try {
-      // Add a small delay to prevent immediate failures
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      const userLocation = await getUserLocation();
-      setLocation(userLocation);
+      // Check permission first
+      const permission = await checkPermission()
+      setPermissionState(permission)
 
-      // If we're using the default location, still set an error
-      // but we'll have location data to work with
-      if (
-        userLocation.city === "Bangkok" &&
-        userLocation.country === "Thailand"
-      ) {
-        setError("Using default location");
-      } else {
-        setError(null);
+      if (permission === "denied") {
+        setError("Location permission denied. Please enable location services in your browser.")
+        setLocation(null)
+        setLoading(false)
+        return
       }
+
+      // Try browser geolocation
+      const userLocation = await fetchBrowserLocation()
+      setLocation(userLocation)
+      setError(null)
     } catch (err) {
-      console.error("Error fetching user location:", err);
-      setError(
-        err instanceof Error ? err.message : "Failed to detect location"
-      );
-
-      // Try to get default location even if there's an error
-      try {
-        const defaultLocation = {
-          latitude: 13.7563,
-          longitude: 100.5018,
-          city: "Bangkok",
-          region: "Bangkok",
-          country: "Thailand",
-          timezone: "Asia/Bangkok",
-        };
-        setLocation(defaultLocation);
-      } catch (defaultErr) {
-        // If even getting the default location fails, set location to null
-        setLocation(null);
-      }
+      console.error("Error fetching user location:", err)
+      setError(err instanceof Error ? err.message : "Failed to detect location")
+      setLocation(null)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   // Function to retry location detection
   const retryLocation = () => {
-    fetchLocation();
-  };
+    fetchLocation()
+  }
 
   useEffect(() => {
-    fetchLocation();
-  }, []);
+    fetchLocation()
+  }, [])
 
-  return { location, loading, error, retryLocation };
+  return {
+    location,
+    loading,
+    error,
+    retryLocation,
+    permissionState,
+  }
 }
+

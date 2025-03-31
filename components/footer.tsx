@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { Activity, ExternalLink } from "lucide-react"
+import Link from "next/link";
+import { Activity, ExternalLink } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -12,8 +12,9 @@ export default function Footer() {
               <span className="font-bold text-lg">EarthquakeMonitor</span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-md">
-              Real-time earthquake detection and monitoring for Thailand and worldwide. This application uses data from
-              the USGS Earthquake Hazards Program.
+              Real-time earthquake detection and monitoring for Thailand and
+              worldwide. This application uses data from the USGS Earthquake
+              Hazards Program and Thai Meteorological Department.
             </p>
           </div>
 
@@ -25,8 +26,7 @@ export default function Footer() {
                   href="https://earthquake.usgs.gov/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground flex items-center"
-                >
+                  className="text-sm text-muted-foreground hover:text-foreground flex items-center">
                   <ExternalLink className="h-3 w-3 mr-2" />
                   USGS Earthquake Hazards Program
                 </a>
@@ -36,19 +36,17 @@ export default function Footer() {
                   href="https://www.tsunami.gov/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground flex items-center"
-                >
+                  className="text-sm text-muted-foreground hover:text-foreground flex items-center">
                   <ExternalLink className="h-3 w-3 mr-2" />
                   U.S. Tsunami Warning System
                 </a>
               </li>
               <li>
                 <a
-                  href="https://www.tmd.go.th/en/earthquake.php"
+                  href="https://earthquake.tmd.go.th/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground flex items-center"
-                >
+                  className="text-sm text-muted-foreground hover:text-foreground flex items-center">
                   <ExternalLink className="h-3 w-3 mr-2" />
                   Thai Meteorological Department
                 </a>
@@ -64,8 +62,7 @@ export default function Footer() {
                   href="https://www.ready.gov/earthquakes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground flex items-center"
-                >
+                  className="text-sm text-muted-foreground hover:text-foreground flex items-center">
                   <ExternalLink className="h-3 w-3 mr-2" />
                   Ready.gov Earthquake Preparedness
                 </a>
@@ -75,8 +72,7 @@ export default function Footer() {
                   href="https://www.redcross.org/get-help/how-to-prepare-for-emergencies/types-of-emergencies/earthquake.html"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground flex items-center"
-                >
+                  className="text-sm text-muted-foreground hover:text-foreground flex items-center">
                   <ExternalLink className="h-3 w-3 mr-2" />
                   Red Cross Earthquake Safety
                 </a>
@@ -86,8 +82,7 @@ export default function Footer() {
                   href="https://www.who.int/news-room/fact-sheets/detail/earthquakes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-foreground flex items-center"
-                >
+                  className="text-sm text-muted-foreground hover:text-foreground flex items-center">
                   <ExternalLink className="h-3 w-3 mr-2" />
                   WHO Earthquake Health Guidelines
                 </a>
@@ -98,27 +93,38 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t text-sm text-muted-foreground">
           <div className="flex flex-col md:flex-row justify-between gap-4">
-            <p>© {new Date().getFullYear()} EarthquakeMonitor. All rights reserved.</p>
             <p>
-              Data source:{" "}
+              © {new Date().getFullYear()} EarthquakeMonitor. All rights
+              reserved.
+            </p>
+            <p>
+              Data source(s):{" "}
               <a
                 href="https://earthquake.usgs.gov/fdsnws/event/1/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline"
-              >
+                className="underline">
                 USGS Earthquake API
+              </a>
+              <br />
+              <a
+                href="https://www.tmd.go.th/en/EarthQuake"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline">
+                Thai Meteorological Department
               </a>
             </p>
           </div>
           <p className="mt-4 text-xs">
-            Disclaimer: This application provides information for educational purposes only. The risk assessment is
-            algorithmic and should not be used as the sole basis for safety decisions. Always refer to official sources
-            and local authorities for critical information during seismic events.
+            Disclaimer: This application provides information for educational
+            purposes only. The risk assessment is algorithmic and should not be
+            used as the sole basis for safety decisions. Always refer to
+            official sources and local authorities for critical information
+            during seismic events.
           </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }
-

@@ -1,62 +1,48 @@
-import { Suspense } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  MapPin,
-  AlertTriangle,
-  AlertCircle,
-  ExternalLink,
-} from "lucide-react";
-import { getEarthquakeById } from "@/lib/earthquake-service";
-import EarthquakeDetailMap from "@/components/earthquake-detail-map";
-import { formatDistanceToNow, format } from "date-fns";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Suspense } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { ArrowLeft, Calendar, Clock, MapPin, AlertTriangle, AlertCircle, ExternalLink } from "lucide-react"
+import { getEarthquakeById } from "@/lib/earthquake-service"
+import EarthquakeDetailMap from "@/components/earthquake-detail-map"
+import { formatDistanceToNow, format } from "date-fns"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   try {
-    const earthquake = await getEarthquakeById(params.id);
+    const earthquake = await getEarthquakeById(params.id)
 
     if (earthquake.place === "Location unavailable") {
       return {
         title: `Earthquake ${params.id} | Limited Data Available`,
         description: `Limited information available for earthquake ${params.id}`,
-      };
+      }
     }
 
     return {
       title: `M${earthquake.magnitude} Earthquake near ${earthquake.place} | Earthquake Monitor`,
-      description: `Details about the M${
-        earthquake.magnitude
-      } earthquake near ${earthquake.place} on ${format(
+      description: `Details about the M${earthquake.magnitude} earthquake near ${earthquake.place} on ${format(
         new Date(earthquake.time),
-        "PPP"
+        "PPP",
       )}`,
-    };
+    }
   } catch (error) {
-    console.error("Error generating metadata:", error);
+    console.error("Error generating metadata:", error)
     return {
       title: "Earthquake Details | Earthquake Monitor",
-    };
+    }
   }
 }
 
-export default async function EarthquakeDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function EarthquakeDetailPage({ params }: { params: { id: string } }) {
   try {
     // We should always get an earthquake object now, even if it's synthetic
-    const earthquake = await getEarthquakeById(params.id);
+    const earthquake = await getEarthquakeById(params.id)
 
     // Check if we're dealing with limited data
-    const isLimitedData = earthquake?.place === "Location unavailable";
+    const isLimitedData = earthquake?.place === "Location unavailable"
 
     if (isLimitedData) {
       return (
@@ -70,8 +56,8 @@ export default async function EarthquakeDetailPage({
           <Alert className="mb-6 bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-900">
             <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
             <AlertDescription className="text-amber-800 dark:text-amber-300">
-              Limited data available for earthquake ID: {params.id}. This
-              earthquake may be archived or removed from the USGS database.
+              Limited data available for earthquake ID: {params.id}. This earthquake may be archived or removed from the
+              USGS database.
             </AlertDescription>
           </Alert>
 
@@ -81,23 +67,19 @@ export default async function EarthquakeDetailPage({
             </CardHeader>
             <CardContent>
               <p className="mb-4">
-                We found a reference to this earthquake, but complete data is
-                not available in the USGS API.
+                We found a reference to this earthquake, but complete data is not available in the USGS API.
               </p>
 
               <p className="mb-6 text-sm text-muted-foreground">
-                This typically happens with older earthquakes or those that have
-                been revised or removed from the active database.
+                This typically happens with older earthquakes or those that have been revised or removed from the active
+                database.
               </p>
 
               <div className="mb-6">
-                <h3 className="text-lg font-medium mb-2">
-                  Available Information
-                </h3>
+                <h3 className="text-lg font-medium mb-2">Available Information</h3>
                 <ul className="list-disc pl-5 space-y-1">
                   <li>
-                    Earthquake ID:{" "}
-                    <span className="font-mono">{earthquake.id}</span>
+                    Earthquake ID: <span className="font-mono">{earthquake.id}</span>
                   </li>
                   {earthquake.url && (
                     <li>
@@ -105,9 +87,9 @@ export default async function EarthquakeDetailPage({
                         href={earthquake.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
-                        USGS Event Page{" "}
-                        <ExternalLink className="h-3 w-3 ml-1" />
+                        className="text-blue-600 dark:text-blue-400 hover:underline flex items-center"
+                      >
+                        USGS Event Page <ExternalLink className="h-3 w-3 ml-1" />
                       </a>
                     </li>
                   )}
@@ -121,7 +103,8 @@ export default async function EarthquakeDetailPage({
                 <a
                   href={`https://earthquake.usgs.gov/earthquakes/eventpage/${earthquake.id}`}
                   target="_blank"
-                  rel="noopener noreferrer">
+                  rel="noopener noreferrer"
+                >
                   <Button variant="outline">
                     View on USGS <ExternalLink className="h-4 w-4 ml-2" />
                   </Button>
@@ -130,35 +113,33 @@ export default async function EarthquakeDetailPage({
             </CardContent>
           </Card>
         </main>
-      );
+      )
     }
 
     const getMagnitudeColor = (magnitude: number) => {
-      if (magnitude < 4.0) return "bg-green-500 text-white";
-      if (magnitude < 5.0) return "bg-yellow-500 text-black";
-      if (magnitude < 6.0) return "bg-orange-500 text-white";
-      return "bg-red-500 text-white";
-    };
+      if (magnitude < 4.0) return "bg-green-500 text-white"
+      if (magnitude < 5.0) return "bg-yellow-500 text-black"
+      if (magnitude < 6.0) return "bg-orange-500 text-white"
+      return "bg-red-500 text-white"
+    }
 
     const getAlertBadge = () => {
-      if (!earthquake.alert) return null;
+      if (!earthquake.alert) return null
 
       const alertColors: Record<string, string> = {
         green: "bg-green-100 text-green-800 border-green-200",
         yellow: "bg-yellow-100 text-yellow-800 border-yellow-200",
         orange: "bg-orange-100 text-orange-800 border-orange-200",
         red: "bg-red-100 text-red-800 border-red-200",
-      };
+      }
 
       return (
-        <Badge
-          variant="outline"
-          className={`ml-2 ${alertColors[earthquake.alert] || ""}`}>
+        <Badge variant="outline" className={`ml-2 ${alertColors[earthquake.alert] || ""}`}>
           <AlertTriangle className="mr-1 h-3 w-3" />
           {earthquake.alert.toUpperCase()} Alert
         </Badge>
-      );
-    };
+      )
+    }
 
     return (
       <main className="container mx-auto px-4 py-6">
@@ -171,10 +152,7 @@ export default async function EarthquakeDetailPage({
         <div className="grid gap-6 md:grid-cols-3">
           <div className="md:col-span-2">
             <div className="flex items-center gap-4 mb-4">
-              <Badge
-                className={`text-lg py-1 px-3 ${getMagnitudeColor(
-                  earthquake.magnitude
-                )}`}>
+              <Badge className={`text-lg py-1 px-3 ${getMagnitudeColor(earthquake.magnitude)}`}>
                 M{earthquake.magnitude.toFixed(1)}
               </Badge>
               <h1 className="text-2xl font-bold">{earthquake.place}</h1>
@@ -190,11 +168,7 @@ export default async function EarthquakeDetailPage({
                 <Clock className="mr-2 h-4 w-4" />
                 {format(new Date(earthquake.time), "p")}
                 <span className="ml-2 text-sm">
-                  (
-                  {formatDistanceToNow(new Date(earthquake.time), {
-                    addSuffix: true,
-                  })}
-                  )
+                  ({formatDistanceToNow(new Date(earthquake.time), { addSuffix: true })})
                 </span>
               </div>
               <div className="flex items-center">
@@ -218,58 +192,41 @@ export default async function EarthquakeDetailPage({
               <CardContent>
                 <dl className="space-y-4">
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">
-                      Magnitude Type
-                    </dt>
+                    <dt className="text-sm font-medium text-muted-foreground">Magnitude Type</dt>
                     <dd className="text-lg">{earthquake.magnitudeType}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">
-                      Coordinates
-                    </dt>
-                    <dd className="text-lg">
-                      {earthquake.coordinates.join(", ")}
-                    </dd>
+                    <dt className="text-sm font-medium text-muted-foreground">Coordinates</dt>
+                    <dd className="text-lg">{earthquake.coordinates.join(", ")}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">
-                      Tsunami Risk
-                    </dt>
-                    <dd className="text-lg">
-                      {earthquake.tsunami ? "Yes" : "No"}
-                    </dd>
+                    <dt className="text-sm font-medium text-muted-foreground">Tsunami Risk</dt>
+                    <dd className="text-lg">{earthquake.tsunami ? "Yes" : "No"}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">
-                      Status
-                    </dt>
+                    <dt className="text-sm font-medium text-muted-foreground">Status</dt>
                     <dd className="text-lg capitalize">{earthquake.status}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">
-                      Source
-                    </dt>
+                    <dt className="text-sm font-medium text-muted-foreground">Source</dt>
                     <dd className="text-lg">{earthquake.source}</dd>
                   </div>
                   {earthquake.felt !== null && (
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">
-                        Felt Reports
-                      </dt>
+                      <dt className="text-sm font-medium text-muted-foreground">Felt Reports</dt>
                       <dd className="text-lg">{earthquake.felt} reports</dd>
                     </div>
                   )}
                   {earthquake.url && (
                     <div>
-                      <dt className="text-sm font-medium text-muted-foreground">
-                        More Info
-                      </dt>
+                      <dt className="text-sm font-medium text-muted-foreground">More Info</dt>
                       <dd className="text-lg">
                         <a
                           href={earthquake.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 dark:text-blue-400 hover:underline">
+                          className="text-blue-600 dark:text-blue-400 hover:underline"
+                        >
                           USGS Event Page
                         </a>
                       </dd>
@@ -281,9 +238,9 @@ export default async function EarthquakeDetailPage({
           </div>
         </div>
       </main>
-    );
+    )
   } catch (error) {
-    console.error("Error rendering earthquake detail page:", error);
+    console.error("Error rendering earthquake detail page:", error)
     // Instead of using notFound(), return a friendly error page
     return (
       <main className="container mx-auto px-4 py-6">
@@ -295,9 +252,7 @@ export default async function EarthquakeDetailPage({
 
         <Alert variant="destructive" className="mb-6">
           <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
-            An error occurred while loading earthquake data for ID: {params.id}
-          </AlertDescription>
+          <AlertDescription>An error occurred while loading earthquake data for ID: {params.id}</AlertDescription>
         </Alert>
 
         <Card>
@@ -306,16 +261,13 @@ export default async function EarthquakeDetailPage({
           </CardHeader>
           <CardContent>
             <p className="mb-4">
-              We encountered an error while trying to load the earthquake data.
-              This could be due to:
+              We encountered an error while trying to load the earthquake data. This could be due to:
             </p>
 
             <ul className="list-disc pl-5 mb-6 space-y-1">
               <li>The earthquake ID may be invalid</li>
               <li>The USGS API may be temporarily unavailable</li>
-              <li>
-                The earthquake data may have been removed from the database
-              </li>
+              <li>The earthquake data may have been removed from the database</li>
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -325,7 +277,8 @@ export default async function EarthquakeDetailPage({
               <a
                 href={`https://earthquake.usgs.gov/earthquakes/eventpage/${params.id}`}
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+              >
                 <Button variant="outline">
                   Try USGS Website <ExternalLink className="h-4 w-4 ml-2" />
                 </Button>
@@ -334,6 +287,7 @@ export default async function EarthquakeDetailPage({
           </CardContent>
         </Card>
       </main>
-    );
+    )
   }
 }
+

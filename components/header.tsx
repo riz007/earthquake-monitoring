@@ -1,11 +1,18 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/mode-toggle"
-import { Activity, ExternalLink, Menu, Info, Shield, BookOpen } from "lucide-react"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useState } from "react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
+import {
+  Activity,
+  ExternalLink,
+  Menu,
+  Info,
+  Shield,
+  BookOpen,
+} from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +20,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <header className="border-b bg-gradient-to-r from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
@@ -42,8 +49,7 @@ export default function Header() {
                   href="https://earthquake.usgs.gov/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center"
-                >
+                  className="flex items-center">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   USGS Earthquake Hazards
                 </a>
@@ -53,19 +59,17 @@ export default function Header() {
                   href="https://www.tsunami.gov/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center"
-                >
+                  className="flex items-center">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Tsunami Warning Center
                 </a>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <a
-                  href="https://www.tmd.go.th/en/earthquake.php"
+                  href="https://earthquake.tmd.go.th/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center"
-                >
+                  className="flex items-center">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Thai Meteorological Department
                 </a>
@@ -88,8 +92,7 @@ export default function Header() {
                   href="https://www.ready.gov/earthquakes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center"
-                >
+                  className="flex items-center">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Ready.gov Earthquake Preparedness
                 </a>
@@ -99,8 +102,7 @@ export default function Header() {
                   href="https://www.redcross.org/get-help/how-to-prepare-for-emergencies/types-of-emergencies/earthquake.html"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center"
-                >
+                  className="flex items-center">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Red Cross Earthquake Safety
                 </a>
@@ -110,8 +112,7 @@ export default function Header() {
                   href="https://www.who.int/news-room/fact-sheets/detail/earthquakes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center"
-                >
+                  className="flex items-center">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   WHO Earthquake Guidelines
                 </a>
@@ -119,7 +120,11 @@ export default function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button variant="ghost" size="sm" asChild className="text-sm font-medium">
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="text-sm font-medium">
             <Link href="/" className="flex items-center">
               <BookOpen className="h-4 w-4 mr-2" />
               About
@@ -141,7 +146,10 @@ export default function Header() {
                 <span className="font-bold text-lg">EarthquakeMonitor</span>
               </div>
               <nav className="flex flex-col gap-4">
-                <Link href="/" onClick={() => setIsOpen(false)} className="text-lg font-medium flex items-center">
+                <Link
+                  href="/"
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-medium flex items-center">
                   <Info className="h-5 w-5 mr-2" />
                   Resources
                 </Link>
@@ -150,8 +158,7 @@ export default function Header() {
                     href="https://earthquake.usgs.gov/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm flex items-center"
-                  >
+                    className="text-sm flex items-center">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     USGS Earthquake Hazards
                   </a>
@@ -159,23 +166,24 @@ export default function Header() {
                     href="https://www.tsunami.gov/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm flex items-center"
-                  >
+                    className="text-sm flex items-center">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Tsunami Warning Center
                   </a>
                   <a
-                    href="https://www.tmd.go.th/en/earthquake.php"
+                    href="https://earthquake.tmd.go.th/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm flex items-center"
-                  >
+                    className="text-sm flex items-center">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Thai Meteorological Department
                   </a>
                 </div>
 
-                <Link href="/" onClick={() => setIsOpen(false)} className="text-lg font-medium flex items-center">
+                <Link
+                  href="/"
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-medium flex items-center">
                   <Shield className="h-5 w-5 mr-2" />
                   Safety
                 </Link>
@@ -184,8 +192,7 @@ export default function Header() {
                     href="https://www.ready.gov/earthquakes"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm flex items-center"
-                  >
+                    className="text-sm flex items-center">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Ready.gov Earthquake Preparedness
                   </a>
@@ -193,8 +200,7 @@ export default function Header() {
                     href="https://www.redcross.org/get-help/how-to-prepare-for-emergencies/types-of-emergencies/earthquake.html"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm flex items-center"
-                  >
+                    className="text-sm flex items-center">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     Red Cross Earthquake Safety
                   </a>
@@ -202,14 +208,16 @@ export default function Header() {
                     href="https://www.who.int/news-room/fact-sheets/detail/earthquakes"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm flex items-center"
-                  >
+                    className="text-sm flex items-center">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     WHO Earthquake Guidelines
                   </a>
                 </div>
 
-                <Link href="/" onClick={() => setIsOpen(false)} className="text-lg font-medium flex items-center">
+                <Link
+                  href="/"
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-medium flex items-center">
                   <BookOpen className="h-5 w-5 mr-2" />
                   About
                 </Link>
@@ -219,6 +227,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
-
