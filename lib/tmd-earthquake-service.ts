@@ -3,7 +3,7 @@ import type {
   TMDEarthquakeResponse,
 } from "@/types/tmd-earthquake";
 
-// Fetch earthquake data from Thai Meteorological Department
+// Fetch Seismic activities data from Thai Meteorological Department
 export async function getTMDEarthquakes(): Promise<TMDEarthquake[]> {
   try {
     const response = await fetch("/api/tmd-earthquakes", {

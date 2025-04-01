@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Earthquake Monitor | Thailand & Global",
-    "description": "Real-time earthquake detection and monitoring for Thailand and worldwide"
+    "description": "Real-time seismic activities monitoring for Thailand and worldwide"
   },
   "common": {
     "loading": "Loading...",
@@ -12,7 +12,7 @@
   },
   "home": {
     "title": "Earthquake Monitor",
-    "subtitle": "Real-time earthquake detection and monitoring"
+    "subtitle": "Real-time seismic activities monitoring"
   },
   "tabs": {
     "map": "Map View",
@@ -26,7 +26,7 @@
     "history": "Historical Data"
   },
   "footer": {
-    "description": "Real-time earthquake detection and monitoring for Thailand and worldwide. Stay informed about seismic activity in your area.",
+    "description": "Real-time seismic activities monitoring for Thailand and worldwide. Stay informed about seismic activity in your area.",
     "resources": "Resources",
     "legal": "Legal",
     "connect": "Connect",
@@ -114,4 +114,3 @@
     "safetyRecommendations": "Safety Recommendations"
   }
 }
-

@@ -12,7 +12,7 @@ export default function Footer() {
               <span className="font-bold text-lg">EarthquakeMonitor</span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-md">
-              Real-time earthquake detection and monitoring for Thailand and
+              Real-time seismic activities monitoring for Thailand and
               worldwide. This application uses data from the USGS Earthquake
               Hazards Program and Thai Meteorological Department.
             </p>
@@ -94,10 +94,6 @@ export default function Footer() {
         <div className="mt-8 pt-6 border-t text-sm text-muted-foreground">
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <p>
-              © {new Date().getFullYear()} EarthquakeMonitor. All rights
-              reserved.
-            </p>
-            <p>
               Data source(s):{" "}
               <a
                 href="https://earthquake.usgs.gov/fdsnws/event/1/"
@@ -108,7 +104,7 @@ export default function Footer() {
               </a>
               <br />
               <a
-                href="https://www.tmd.go.th/en/EarthQuake"
+                href="https://earthquake.tmd.go.th/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline">

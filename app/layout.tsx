@@ -17,7 +17,7 @@ export default function RootLayout({
       <head>
         <meta
           name="description"
-          content="Real-time earthquake detection and monitoring for Thailand and worldwide"
+          content="Real-time seismic activities monitoring for Thailand and worldwide"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
