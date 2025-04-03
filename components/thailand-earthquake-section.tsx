@@ -90,7 +90,7 @@ export default function ThailandEarthquakeSection() {
           <p className="text-muted-foreground">
             ข้อมูลแผ่นดินไหวจากกรมอุตุนิยมวิทยา ประเทศไทย
             <br />
-            Earthquake data from Thai Meteorological Department
+            Seismic events data from Thai Meteorological Department
           </p>
         </div>
         <Button
@@ -127,7 +127,7 @@ export default function ThailandEarthquakeSection() {
               <CardDescription>
                 แสดงข้อมูลแผ่นดินไหวในประเทศไทยและภูมิภาคใกล้เคียง
                 <br />
-                Displaying earthquake data in Thailand and nearby regions
+                Displaying seismic events data in Thailand and nearby regions
               </CardDescription>
             </div>
             <div className="mt-2">
@@ -138,7 +138,7 @@ export default function ThailandEarthquakeSection() {
         <CardContent>
           <div className="mb-4">
             <div className="text-sm text-muted-foreground">
-              {filteredEarthquakes.length} earthquakes found
+              {filteredEarthquakes.length} seismic events found
               {filters.country && ` in ${filters.country}`}
               {filters.startDate &&
                 ` from ${filters.startDate.toLocaleDateString()}`}
