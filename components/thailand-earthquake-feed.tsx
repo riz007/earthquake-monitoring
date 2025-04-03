@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { format, parseISO } from "date-fns";
-import { getTMDEarthquakes } from "@/lib/tmd-earthquake-service";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -25,11 +24,17 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import type { TMDEarthquake } from "@/types/tmd-earthquake";
 
-export default function ThailandEarthquakeFeed() {
-  const [earthquakes, setEarthquakes] = useState<TMDEarthquake[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface ThailandEarthquakeFeedProps {
+  earthquakes: TMDEarthquake[];
+  loading: boolean;
+  error: string | null;
+}
 
+export default function ThailandEarthquakeFeed({
+  earthquakes,
+  loading,
+  error,
+}: ThailandEarthquakeFeedProps) {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -38,26 +43,11 @@ export default function ThailandEarthquakeFeed() {
   >([]);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Update pagination when earthquakes change
   useEffect(() => {
-    const fetchEarthquakes = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await getTMDEarthquakes();
-        setEarthquakes(data);
-        setTotalPages(Math.ceil(data.length / itemsPerPage));
-      } catch (err) {
-        console.error("Failed to fetch TMD earthquake data:", err);
-        setError(
-          err instanceof Error ? err.message : "Failed to fetch earthquake data"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEarthquakes();
-  }, []);
+    setTotalPages(Math.ceil(earthquakes.length / itemsPerPage));
+    setCurrentPage(1); // Reset to first page when data changes
+  }, [earthquakes]);
 
   // Update paginated earthquakes when page changes or earthquakes change
   useEffect(() => {
@@ -103,9 +93,9 @@ export default function ThailandEarthquakeFeed() {
     return (
       <Card>
         <CardContent className="p-6 text-center text-muted-foreground">
-          ไม่พบข้อมูลแผ่นดินไหวล่าสุด
+          ไม่พบข้อมูลแผ่นดินไหวที่ตรงกับเงื่อนไขการค้นหา
           <br />
-          No recent earthquake data available
+          No earthquake data matching your filter criteria
         </CardContent>
       </Card>
     );

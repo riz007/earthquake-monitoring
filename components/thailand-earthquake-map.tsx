@@ -1,11 +1,9 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Loader, AlertTriangle } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { getTMDEarthquakes } from "@/lib/tmd-earthquake-service"
-import type { TMDEarthquake } from "@/types/tmd-earthquake"
-import dynamic from "next/dynamic"
+import { Loader, AlertTriangle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import type { TMDEarthquake } from "@/types/tmd-earthquake";
+import dynamic from "next/dynamic";
 
 // Dynamically import Leaflet with no SSR to avoid hydration issues
 const LeafletMap = dynamic(() => import("@/components/leaflet-map-tmd"), {
@@ -19,41 +17,33 @@ const LeafletMap = dynamic(() => import("@/components/leaflet-map-tmd"), {
       </div>
     </div>
   ),
-})
+});
 
-export default function ThailandEarthquakeMap() {
-  const [earthquakes, setEarthquakes] = useState<TMDEarthquake[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface ThailandEarthquakeMapProps {
+  earthquakes: TMDEarthquake[];
+  loading: boolean;
+  error: string | null;
+}
 
-  useEffect(() => {
-    const fetchEarthquakes = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const data = await getTMDEarthquakes()
-        setEarthquakes(data)
-      } catch (error) {
-        console.error("Failed to fetch TMD earthquake data:", error)
-        setError("Failed to fetch earthquake data. Please check your connection and try again.")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchEarthquakes()
-  }, [])
-
+export default function ThailandEarthquakeMap({
+  earthquakes,
+  loading,
+  error,
+}: ThailandEarthquakeMapProps) {
   if (loading) {
     return (
       <div className="h-full w-full min-h-[400px] flex items-center justify-center bg-muted/20">
         <div className="flex flex-col items-center gap-2">
           <Loader className="h-8 w-8 animate-spin text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">กำลังโหลดข้อมูลแผ่นดินไหว...</p>
-          <p className="text-sm text-muted-foreground">Loading earthquake data...</p>
+          <p className="text-sm text-muted-foreground">
+            กำลังโหลดข้อมูลแผ่นดินไหว...
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Loading earthquake data...
+          </p>
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -64,13 +54,29 @@ export default function ThailandEarthquakeMap() {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       </div>
-    )
+    );
+  }
+
+  if (earthquakes.length === 0) {
+    return (
+      <div className="h-full w-full min-h-[400px] flex items-center justify-center">
+        <Alert className="max-w-md">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            ไม่พบข้อมูลแผ่นดินไหวที่ตรงกับเงื่อนไขการค้นหา
+            <br />
+            No earthquake data matching your filter criteria
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
   }
 
   return (
-    <div className="h-full w-full min-h-[400px]" style={{ height: "600px", position: "relative" }}>
+    <div
+      className="h-full w-full min-h-[400px]"
+      style={{ height: "600px", position: "relative" }}>
       <LeafletMap earthquakes={earthquakes} />
     </div>
-  )
+  );
 }
-

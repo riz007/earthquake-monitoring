@@ -12,7 +12,7 @@ import ThailandEarthquakeSection from "@/components/thailand-earthquake-section"
 export const metadata: Metadata = {
   title: "Earthquake Monitor | Thailand & Global",
   description:
-    "Real-time seismic activities monitoring for Thailand and worldwide",
+    "Real-time earthquake detection and monitoring for Thailand and worldwide",
 };
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
     <div className="container mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold mb-2">Earthquake Monitor</h1>
       <p className="text-muted-foreground mb-6">
-        Real-time seismic activities monitoring for Thailand and worldwide
+        Real-time earthquake detection and monitoring for Thailand and worldwide
       </p>
 
       <Alert className="mb-6 bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-900">
@@ -33,9 +33,17 @@ export default function Home() {
 
       {/* Main tabs for switching between Thailand and Global data */}
       <Tabs defaultValue="thailand" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="thailand">Thailand & Regional</TabsTrigger>
-          <TabsTrigger value="global">Global Data</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 mb-6 bg-teal-100 dark:bg-teal-900/20">
+          <TabsTrigger
+            value="thailand"
+            className="data-[state=active]:bg-teal-200 dark:data-[state=active]:bg-teal-800/30">
+            Thailand & Regional
+          </TabsTrigger>
+          <TabsTrigger
+            value="global"
+            className="data-[state=active]:bg-teal-200 dark:data-[state=active]:bg-teal-800/30">
+            Global Data
+          </TabsTrigger>
         </TabsList>
 
         {/* Thailand Earthquake Section */}
@@ -58,9 +66,17 @@ export default function Home() {
             </Suspense>
 
             <Tabs defaultValue="map" className="mt-6">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="map">Map View</TabsTrigger>
-                <TabsTrigger value="feed">Recent Activity</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 mb-6 bg-cyan-100 dark:bg-cyan-900/20">
+                <TabsTrigger
+                  value="map"
+                  className="data-[state=active]:bg-cyan-200 dark:data-[state=active]:bg-cyan-800/30">
+                  Map View
+                </TabsTrigger>
+                <TabsTrigger
+                  value="feed"
+                  className="data-[state=active]:bg-cyan-200 dark:data-[state=active]:bg-cyan-800/30">
+                  Recent Activity
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="map" className="mt-0">
                 <div className="h-[600px] rounded-lg overflow-hidden border relative">
