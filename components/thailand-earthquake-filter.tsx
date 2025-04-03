@@ -67,7 +67,6 @@ export default function ThailandEarthquakeFilter({
 
   const [startDateOpen, setStartDateOpen] = useState(false);
   const [endDateOpen, setEndDateOpen] = useState(false);
-  const [countryOpen, setCountryOpen] = useState(false);
 
   const applyFilters = () => {
     onFilterChange({
@@ -101,64 +100,6 @@ export default function ThailandEarthquakeFilter({
       <PopoverContent className="w-80 p-4" align="end">
         <div className="space-y-4">
           <h3 className="font-medium">Filter Earthquakes</h3>
-
-          <div className="space-y-2">
-            <Label>Country/Region</Label>
-            <Popover open={countryOpen} onOpenChange={setCountryOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={countryOpen}
-                  className="w-full justify-between">
-                  {selectedCountry || "All countries"}
-                  <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-full p-0" align="start">
-                <Command>
-                  <CommandInput placeholder="Search country..." />
-                  <CommandList>
-                    <CommandEmpty>No country found.</CommandEmpty>
-                    <CommandGroup className="max-h-64 overflow-auto">
-                      <CommandItem
-                        onSelect={() => {
-                          setSelectedCountry(undefined);
-                          setCountryOpen(false);
-                        }}>
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            !selectedCountry ? "opacity-100" : "opacity-0"
-                          )}
-                        />
-                        All countries
-                      </CommandItem>
-                      {COUNTRIES.map((country) => (
-                        <CommandItem
-                          key={country}
-                          onSelect={() => {
-                            setSelectedCountry(country);
-                            setCountryOpen(false);
-                          }}>
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              selectedCountry === country
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {country}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
-
           <div className="space-y-2">
             <Label>Start Date</Label>
             <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
